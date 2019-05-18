@@ -82,6 +82,30 @@ local function GetCurrentMount()
 	return false, false
 end
 
+local function LoadMounts()
+	local numMounts, mounts = C_MountJournal.GetNumMounts(), {}
+
+	if numMounts == 0 then
+		return false
+	else
+		for i = 1, numMounts do
+			local name, _, icon, active, isUsable, _, isFavorite, _, _, _, isCollected = C_MountJournal.GetMountInfoByID(i)
+			if isUsable and isCollected then
+				mounts[name] = {
+					name = name,
+					icon = icon,
+					active = active,
+					isUsable = isUsable,
+					isFavorite = isFavorite,
+					isCollected = isCollected,
+				}
+			end
+		end
+
+		return mounts
+	end
+end
+
 local function UpdateDisplay(self, ...)
 	if db.id and db.text then
 		self.text:SetFormattedText(displayString, db.text)
@@ -108,22 +132,23 @@ end
 local function CreateMenu(self, level)
 	local numMounts = C_MountJournal.GetNumMounts()
 	menu = wipe(menu)
-	
-	if numMounts == 0 then
+
+	-- we must load them beforehand to sort them
+	local mounts = LoadMounts()
+
+	if numMounts == 0 or mounts == false then
 		return
 	elseif numMounts <= 20 then
-		for i = 1, numMounts do
-			local name, _, icon, active, isUsable, _, isFavorite, _, _, _, isCollected = C_MountJournal.GetMountInfoByID(i)
-			if isUsable and isColected then
-				menu.hasArrow = false
-				menu.notCheckable = true
-				menu.text = name .. "     "
-				menu.icon = icon
-				menu.colorCode = active == true and hexColor or isFavorite == true and "|cffE7E716" or "|cffffffff"
-				menu.func = ModifiedClick
-				menu.arg1 = i
-				UIDropDownMenu_AddButton(menu)
-			end
+		-- don't need to break them up by first letter when < 20
+		for name, mount in PairsByKeys(mounts) do
+			menu.hasArrow = false
+			menu.notCheckable = true
+			menu.text = mount.name .. "     "
+			menu.icon = mount.icon
+			menu.colorCode = mount.active == true and hexColor or mount.isFavorite == true and "|cffE7E716" or "|cffffffff"
+			menu.func = ModifiedClick
+			menu.arg1 = i
+			UIDropDownMenu_AddButton(menu)
 		end
 	else
 		level = level or 1
@@ -146,13 +171,12 @@ local function CreateMenu(self, level)
 
 		elseif level == 2 then
 			local Level1_Key = UIDROPDOWNMENU_MENU_VALUE["Level1_Key"]
-			for i = 1, numMounts do
-				local name, _, icon, active, isUsable, _, isFavorite, _, _, _, isCollected = C_MountJournal.GetMountInfoByID(i)
-				if isUsable and isCollected then
-					local firstChar = name:sub(1, 1):upper()
-					menu.text = name .. "     "
-					menu.icon = icon
-					menu.colorCode = active == true and hexColor or isFavorite == true and "|cffE7E716" or "|cffffffff"
+			for name, mount in PairsByKeys(mounts) do
+				if mount.isUsable and mount.isCollected then
+					local firstChar = mount.name:sub(1, 1):upper()
+					menu.text = mount.name .. "     "
+					menu.icon = mount.icon
+					menu.colorCode = mount.active == true and hexColor or mount.isFavorite == true and "|cffE7E716" or "|cffffffff"
 					menu.func = ModifiedClick
 					menu.arg1 = i
 					menu.hasArrow = false
