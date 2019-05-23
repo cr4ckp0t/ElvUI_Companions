@@ -1,7 +1,7 @@
 ## Interface: 80100
 ## Author: Lockslap
 ## Title: |cff1784d1ElvUI|r Companions
-## Version: 5.0.2
+## Version: 5.0.3
 ## Notes: Pets and mounts datatext for ElvUI.  Compatible with new pet/mount API!
 ## SavedVariables: MountsDB, CompanionsDB
 ## RequiredDeps: ElvUI
