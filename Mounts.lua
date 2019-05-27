@@ -93,6 +93,7 @@ local function LoadMounts()
 			if isUsable and isCollected then
 				mounts[name] = {
 					name = name,
+					id = i,
 					icon = icon,
 					active = active,
 					isUsable = isUsable,
@@ -147,7 +148,7 @@ local function CreateMenu(self, level)
 			menu.icon = mount.icon
 			menu.colorCode = mount.active == true and hexColor or mount.isFavorite == true and "|cffE7E716" or "|cffffffff"
 			menu.func = ModifiedClick
-			menu.arg1 = i
+			menu.arg1 = mount.id
 			UIDropDownMenu_AddButton(menu)
 		end
 	else
@@ -178,7 +179,7 @@ local function CreateMenu(self, level)
 					menu.icon = mount.icon
 					menu.colorCode = mount.active == true and hexColor or mount.isFavorite == true and "|cffE7E716" or "|cffffffff"
 					menu.func = ModifiedClick
-					menu.arg1 = i
+					menu.arg1 = mount.id
 					menu.hasArrow = false
 					menu.notCheckable = true
 					

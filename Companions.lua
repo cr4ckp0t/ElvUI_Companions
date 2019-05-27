@@ -315,24 +315,25 @@ end
 local function OnClick(self, button)
 	DT.tooltip:Hide()
 
-	if (button == 'RightButton' and not IsShiftKeyDown()) then
-		ToggleDropDownMenu(1, nil, F, self, 0, 0)
-	end
-	if (IsShiftKeyDown() and button == 'LeftButton') then	
-		ToggleCollectionsJournal()
-		CollectionsJournal_SetTab(CollectionsJournal, 2)
-	end
-	if (button == 'LeftButton' and not IsShiftKeyDown()) then	
-		if db.id ~= nil then
-			C_PetJournal.SummonPetByGUID(db.id);
-		end
-	end	
-	if (IsShiftKeyDown() and button == 'RightButton') then
-		if IsAddOnLoaded("Blizzard_PetJournal") then
-			ToggleDropDownMenu(1, nil, PetJournalFilterDropDown, self, 0, 0)
+	if button == "LeftButton" then
+		if not IsShiftKeyDown() then
+			if db.id ~= nil then
+				C_PetJournal.SummonPetByGUID(db.id);
+			end
 		else
-			local loaded, reason = LoadAddOn("Blizzard_PetJournal")
-			ToggleDropDownMenu(1, nil, PetJournalFilterDropDown, self, 0, 0)
+			ToggleCollectionsJournal()
+			CollectionsJournal_SetTab(CollectionsJournal, 2)
+		end
+	elseif button == "RightButton" then
+		if not IsShiftKeyDown() then
+			ToggleDropDownMenu(1, nil, F, self, 0, 0)
+		else
+			if IsAddOnLoaded("Blizzard_PetJournal") then
+				ToggleDropDownMenu(1, nil, PetJournalFilterDropDown, self, 0, 0)
+			else
+				local loaded, reason = LoadAddOn("Blizzard_PetJournal")
+				ToggleDropDownMenu(1, nil, PetJournalFilterDropDown, self, 0, 0)
+			end
 		end
 	end
 end
