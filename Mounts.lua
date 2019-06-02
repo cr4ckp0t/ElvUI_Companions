@@ -1,10 +1,22 @@
 -------------------------------------------------------------------------------
--- ElvUI Companions Datatext By Lockslap
+-- ElvUI Companions (Mounts) Datatext By Crackpotx
 -------------------------------------------------------------------------------
 local E, _, V, P, G, _ = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
-local F = CreateFrame("frame")
+local F = CreateFrame("Frame", "ElvUI_CompanionsMountsDatatext", E.UIParent, "UIDropDownMenuTemplate")
 local L = LibStub("AceLocale-3.0"):GetLocale("ElvUI_Companions", false)
+
+-- local api cache
+local C_MountJournal_GetMountInfoByID = C_MountJournal.GetMountInfoByID
+local C_MountJournal_GetNumMounts = C_MountJournal.GetNumMounts
+local C_MountJournal_GetIsFavorite = C_MountJournal.GetIsFavorite
+local C_MountJournal_SetIsFavorite = C_MountJournal.SetIsFavorite
+local C_MountJournal_SummonByID = C_MountJournal.SummonByID
+local CreateFrame = _G["CreateFrame"]
+local GetNumCompanions = _G["GetNumCompanions"]
+local IsShiftKeyDown = _G["IsShiftKeyDown"]
+local ToggleCollectionsJournal = _G["ToggleCollectionsJournal"]
+local UIDropDownMenu_AddButton = _G["UIDropDownMenu_AddButton"]
 
 local wipe = table.wipe
 local tinsert = table.insert
@@ -71,10 +83,10 @@ local function PairsByKeys(startChar, f)
 end
 
 local function GetCurrentMount()
-	local numMounts = C_MountJournal.GetNumMounts()
+	local numMounts = C_MountJournal_GetNumMounts()
 	if numMounts == 0 then return false, false end
 	for i = 1, numMounts do
-		local name, _, _, active = C_MountJournal.GetMountInfoByID(i)
+		local name, _, _, active = C_MountJournal_GetMountInfoByID(i)
 		if active == true then
 			return i, name
 		end
@@ -83,13 +95,13 @@ local function GetCurrentMount()
 end
 
 local function LoadMounts()
-	local numMounts, mounts = C_MountJournal.GetNumMounts(), {}
+	local numMounts, mounts = C_MountJournal_GetNumMounts(), {}
 
 	if numMounts == 0 then
 		return false
 	else
 		for i = 1, numMounts do
-			local name, _, icon, active, isUsable, _, isFavorite, _, _, _, isCollected = C_MountJournal.GetMountInfoByID(i)
+			local name, _, icon, active, isUsable, _, isFavorite, _, _, _, isCollected = C_MountJournal_GetMountInfoByID(i)
 			if isUsable and isCollected then
 				mounts[name] = {
 					name = name,
@@ -124,21 +136,24 @@ end
 
 local function ModifiedClick(button, id)
 	if not IsShiftKeyDown() then
-		C_MountJournal.SummonByID(id)
+		C_MountJournal_SummonByID(id)
 	else
-		C_MountJournal.SetIsFavorite(id, not C_MountJournal.GetIsFavorite(id))
+		C_MountJournal_SetIsFavorite(id, not C_MountJournal_GetIsFavorite(id))
 	end
 end
 
 local function CreateMenu(self, level)
-	local numMounts = C_MountJournal.GetNumMounts()
+	local numMounts = C_MountJournal_GetNumMounts()
 	menu = wipe(menu)
 
 	-- we must load them beforehand to sort them
 	local mounts = LoadMounts()
 
 	if numMounts == 0 or mounts == false then
-		return
+		menu.hasArrow = false
+		menu.notCheckable = true
+		menu.text = ("|cffff0000%s|r"):format(L["Failed to load mounts."])
+		UIDropDownMenu_AddButton(menu)
 	elseif numMounts <= 20 then
 		-- don't need to break them up by first letter when < 20
 		for name, mount in PairsByKeys(mounts) do
@@ -167,7 +182,7 @@ local function CreateMenu(self, level)
 			menu.notCheckable = true
 			menu.hasArrow = false
 			menu.colorCode = hexColor
-			menu.func = function() C_MountJournal.SummonByID(0) end
+			menu.func = function() C_MountJournal_SummonByID(0) end
 			UIDropDownMenu_AddButton(menu, level)
 
 		elseif level == 2 then
@@ -254,7 +269,7 @@ local function OnClick(self, button)
 	DT.tooltip:Hide()
 	if button == "RightButton" then
 		if IsShiftKeyDown() then
-			C_MountJournal.SummonByID(0)
+			C_MountJournal_SummonByID(0)
 		else
 			CreateMenu()
 			ToggleDropDownMenu(1, nil, F, self, 0, 0)
@@ -262,7 +277,7 @@ local function OnClick(self, button)
 	elseif button == "LeftButton" then
 		if IsShiftKeyDown() then
 			if db.id ~= nil then
-				C_MountJournal.SummonByID(db.id)
+				C_MountJournal_SummonByID(db.id)
 			end
 		else
 			ToggleCollectionsJournal()
@@ -281,10 +296,10 @@ local function OnEnter(self)
 	DT.tooltip:AddLine(" ")
 	DT.tooltip:AddLine(L["<Click> a mount to summon it."])
 	DT.tooltip:AddLine(L["<Shift + Click> a mount to toggle as a favorite."])
-	if C_MountJournal.GetNumMounts() == 0 then
-		DT.tooltip:AddLine("|cffff0000You have no mounts!|r")
+	if GetNumCompanions("MOUNT") == 0 then
+		DT.tooltip:AddLine(L["You have no mounts."], 0, 1, 0)
 	else
-		DT.tooltip:AddLine(("|cff00ff00You have %d mounts.|r"):format(GetNumCompanions("MOUNT")))
+		DT.tooltip:AddLine((L["You have %d mounts."]):format(GetNumCompanions("MOUNT")), 0, 1, 0)
 	end
 	DT.tooltip:Show()	
 end

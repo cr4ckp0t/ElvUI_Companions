@@ -1,5 +1,5 @@
 -------------------------------------------------------------------------------
--- ElvUI Companions Datatext By Lockslap (US, Bleeding Hollow)
+-- ElvUI Companions Datatext By Crackpotx (US, Bleeding Hollow)
 --------------------------------------------------------------------------------
 local AceLocale = LibStub:GetLibrary("AceLocale-3.0")
 local L = AceLocale:NewLocale("ElvUI_Companions", "itIT", false)
