@@ -7,6 +7,7 @@ local F = CreateFrame("Frame", "ElvUI_CompanionsMountsDatatext", E.UIParent, "UI
 local L = LibStub("AceLocale-3.0"):GetLocale("ElvUI_Companions", false)
 
 -- local api cache
+local C_MountJournal_GetMountIDs = C_MountJournal.GetMountIDs
 local C_MountJournal_GetMountInfoByID = C_MountJournal.GetMountInfoByID
 local C_MountJournal_GetNumMounts = C_MountJournal.GetNumMounts
 local C_MountJournal_GetIsFavorite = C_MountJournal.GetIsFavorite
@@ -83,29 +84,28 @@ local function PairsByKeys(startChar, f)
 end
 
 local function GetCurrentMount()
-	local numMounts = C_MountJournal_GetNumMounts()
-	if numMounts == 0 then return false, false end
-	for i = 1, numMounts do
-		local name, _, _, active = C_MountJournal_GetMountInfoByID(i)
+	if C_MountJournal_GetNumMounts() == 0 then return false, false end
+	for _, mountID in ipairs(C_MountJournal_GetMountIDs()) do
+		local name, _, _, active = C_MountJournal_GetMountInfoByID(mountID)
 		if active == true then
-			return i, name
+			return mountID, name
 		end
 	end
 	return false, false
 end
 
 local function LoadMounts()
-	local numMounts, mounts = C_MountJournal_GetNumMounts(), {}
+	local mounts = {}
 
-	if numMounts == 0 then
+	if C_MountJournal_GetNumMounts() == 0 then
 		return false
 	else
-		for i = 1, numMounts do
-			local name, _, icon, active, isUsable, _, isFavorite, _, _, _, isCollected = C_MountJournal_GetMountInfoByID(i)
+		for _, mountID in ipairs(C_MountJournal_GetMountIDs()) do
+			local name, _, icon, active, isUsable, _, isFavorite, _, _, _, isCollected = C_MountJournal_GetMountInfoByID(mountID)
 			if isUsable and isCollected then
 				mounts[name] = {
 					name = name,
-					id = i,
+					id = mountID,
 					icon = icon,
 					active = active,
 					isUsable = isUsable,
