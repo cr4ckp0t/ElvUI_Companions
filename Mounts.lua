@@ -119,7 +119,8 @@ local function LoadMounts()
 	end
 end
 
-local function UpdateDisplay(self, ...)
+local function OnEvent(self, ...)
+	lastPanel = self
 	if db.id and db.text then
 		self.text:SetFormattedText(displayString, db.text)
 	end
@@ -260,7 +261,7 @@ local function OnUpdate(self, elapsed)
 	--if not self.lastUpdate then self.lastUpdate = 0 end
 	self.lastUpdate = self.lastUpdate and self.lastUpdate + elapsed or 0
 	if self.lastUpdate >= interval then
-		UpdateDisplay(self)
+		OnEvent(self)
 		self.lastUpdate = 0
 	end
 end
@@ -306,8 +307,11 @@ end
 
 local function ValueColorUpdate(hex, r, g, b)
 	displayString = join("", hex, "%s|r")
-	hexColor = hex
-	if lastPanel ~= nil then OnEvent(lastPanel) end
+	hexColor = he
+	
+	if lastPanel ~= nil then
+		OnEvent(lastPanel, "ELVUI_COLOR_UPDATE")
+	end
 end
 E["valueColorUpdateFuncs"][ValueColorUpdate] = true
 
@@ -320,4 +324,4 @@ F:SetScript("OnEvent", function(self, event, ...)
 	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 end)
 
-DT:RegisterDatatext(L["Mounts"], {"PLAYER_ENTERING_WORLD", "COMPANION_UPDATE", "PET_JOURNAL_LIST_UPDATE"}, UpdateDisplay, OnUpdate, OnClick, OnEnter)
+DT:RegisterDatatext(L["Mounts"], {"PLAYER_ENTERING_WORLD", "COMPANION_UPDATE", "PET_JOURNAL_LIST_UPDATE"}, OnEvent, OnUpdate, OnClick, OnEnter)
