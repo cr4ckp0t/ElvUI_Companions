@@ -258,4 +258,5 @@ F:SetScript("OnEvent", function(self, event, ...)
 	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 end)
 
-DT:RegisterDatatext(L["Toys"], nil, {"PLAYER_ENTERING_WORLD", "NEW_TOY_ADDED", "TOYS_UPDATED"}, OnEvent, OnUpdate, OnClick, OnEnter, nil, L["Toys"])
+DT:RegisterDatatext("Toys", nil, {"PLAYER_ENTERING_WORLD", "NEW_TOY_ADDED", "TOYS_UPDATED"}, OnEvent, OnUpdate, OnClick, OnEnter, nil, L["Toys"])
+--DT:RegisterDatatext(L["Toys"], {"PLAYER_ENTERING_WORLD", "NEW_TOY_ADDED", "TOYS_UPDATED"}, OnEvent, OnUpdate, OnClick, OnEnter)
