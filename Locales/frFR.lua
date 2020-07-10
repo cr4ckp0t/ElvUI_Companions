@@ -1,5 +1,5 @@
 -------------------------------------------------------------------------------
--- ElvUI Companions Datatext By Crackpotx (US, Lightbringer)
+-- ElvUI Companions Datatext By Crackpot (US, Thrall)
 -------------------------------------------------------------------------------
 local AceLocale = LibStub:GetLibrary("AceLocale-3.0")
 local L = AceLocale:NewLocale("ElvUI_Companions", "frFR", false)
