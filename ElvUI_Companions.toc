@@ -1,7 +1,7 @@
-## Interface: 90001
+## Interface: 90002
 ## Author: Crackpotx
 ## Title: |cff1784d1ElvUI|r Companions
-## Version: 6.0.0
+## Version: 6.0.1
 ## Notes: Companions, mounts, and toys datatext for ElvUI.
 ## SavedVariables: MountsDB, CompanionsDB
 ## RequiredDeps: ElvUI
