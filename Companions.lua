@@ -26,32 +26,32 @@ local join = string.join
 
 local menu = {}
 local startChar = {
-	["AB"] = {
-	},
-	["CD"] = {
-	},
-	["EF"] = {
-	},
-	["GH"] = {
-	},
-	["IJ"] = {
-	},
-	["KL"] = {
-	},
-	["MN"] = {
-	},
-	["OP"] = {
-	},
-	["QR"] = {
-	},
-	["ST"] = {
-	},
-	["UV"] = {
-	},
-	["WX"] = {
-	},
-	["YZ"] = {
-	}
+	["A"] = {},
+	["B"] = {},
+	["C"] = {},
+	["D"] = {},
+	["E"] = {},
+	["F"] = {},
+	["G"] = {},
+	["H"] = {},
+	["I"] = {},
+	["J"] = {},
+	["K"] = {},
+	["L"] = {},
+	["M"] = {},
+	["N"] = {},
+	["O"] = {},
+	["P"] = {},
+	["Q"] = {},
+	["R"] = {},
+	["S"] = {},
+	["T"] = {},
+	["U"] = {},
+	["V"] = {},
+	["W"] = {},
+	["X"] = {},
+	["Y"] = {},
+	["Z"] = {},
 }
 
 local displayString = ""
@@ -107,15 +107,11 @@ local function OnEvent(self, ...)
 	end
 end
 
-local function ModifiedClick(self, button, id)
+local function ModifiedClick(button, id)
 	local speciesID, customName, petlevel, xp, maxXp, displayID, isFavorite, petName, petIcon, petType, creatureID = C_PetJournal_GetPetInfoByPetID(id)
-	local creatureName = petName
-	if customName then
-		creatureName = customName
-	end
-	
+	local creatureName = customName and customName or petName
 	if IsShiftKeyDown() then
-		C_PetJournal_PickupPet(Id);
+		C_PetJournal_PickupPet(id);
 	elseif IsAltKeyDown() and not IsControlKeyDown() then
 		db.favOne = id
 		DEFAULT_CHAT_FRAME:AddMessage((L["%sElvUI Companions:|r %s added as favorite one."]):format(hexColor, creatureName), 1, 1, 1)
@@ -140,7 +136,7 @@ local function CreateMenu(self, level)
 		menu.notCheckable = true
 		menu.text = ("|cffff0000%s|r"):format(L["Failed to load companions."])
 		UIDropDownMenu_AddButton(menu)
-	elseif numPets <= 20 then
+	elseif numOwned <= 20 then
 		for i = 1, numPets do
 			--local speciesID, customName, level, xp, maxXp, displayID, petName, petIcon, petType, creatureID = C_PetJournal_GetPetInfoByPetID(id)
 			local petID, speciesID, isOwned, customName, petlevel, favorite, isRevoked, name, icon, petType, creatureID, sourceText, description, isWildPet = C_PetJournal_GetPetInfoByIndex(i)
@@ -245,16 +241,11 @@ local function CreateMenu(self, level)
 			local Level1_Key = UIDROPDOWNMENU_MENU_VALUE["Level1_Key"]
 			
 			for i = 1, numPets do
-				local petID, speciesID, isOwned, customName, petlevel, favorite, isRevoked, name, icon, petType, creatureID, sourceText, description, isWildPet = C_PetJournal_GetPetInfoByIndex(i)
-				local creatureName = name
-				if customName then
-					creatureName = customName
-				end
-				firstChar = strupper(strsub(creatureName, 1, 1))
+				local petID, speciesID, isOwned, customName, _, _, _, name, icon, _, _, _, _, _ = C_PetJournal_GetPetInfoByIndex(i)
 				if isOwned then
 					menu.hasArrow = false; -- Start menu creation
 					menu.notCheckable = true;
-					menu.text = creatureName
+					menu.text = customName and customName or name
 					menu.icon = icon
 					menu.colorCode = "|cffffffff"
 					menu.func = ModifiedClick
@@ -264,7 +255,114 @@ local function CreateMenu(self, level)
 					if summonedPetID == petID then
 						menu.colorCode = hexColor
 					end
+
+					firstChar = strupper(strsub(customName and customName or name, 1, 1))
+
+					if firstChar == "A" and Level1_Key == "A" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+
+					if firstChar == "B" and Level1_Key == "B" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
 					
+					if firstChar == "C" and Level1_Key == "C" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "D" and Level1_Key == "D" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "E" and Level1_Key == "E" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "F" and Level1_Key == "F" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "G" and Level1_Key == "G" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "H" and Level1_Key == "H" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "I" and Level1_Key == "I" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "J" and Level1_Key == "J" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "K" and Level1_Key == "K" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "L" and Level1_Key == "L" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "M" and Level1_Key == "M" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "N" and Level1_Key == "N" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "O" and Level1_Key == "O" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "P" and Level1_Key == "P" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "Q" and Level1_Key == "Q" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "R" and Level1_Key == "R" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "S" and Level1_Key == "S" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "T" and Level1_Key == "T" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "U" and Level1_Key == "U" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "V" and Level1_Key == "V" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "W" and Level1_Key == "W" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "X" and Level1_Key == "X" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "Y" and Level1_Key == "Y" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "Z" and Level1_Key == "Z" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+
+					--[[
 					if firstChar >= "A" and firstChar <= "B" and Level1_Key == "AB" then
 						UIDropDownMenu_AddButton(menu, level)
 					end
@@ -316,6 +414,7 @@ local function CreateMenu(self, level)
 					if firstChar >= "Y" and firstChar <= "Z" and Level1_Key == "YZ" then
 						UIDropDownMenu_AddButton(menu, level)
 					end
+					]]
 				end
 			end
 		end

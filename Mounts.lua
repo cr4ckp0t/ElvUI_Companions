@@ -27,32 +27,32 @@ local join = string.join
 
 local menu = {}
 local startChar = {
-	["AB"] = {
-	},
-	["CD"] = {
-	},
-	["EF"] = {
-	},
-	["GH"] = {
-	},
-	["IJ"] = {
-	},
-	["KL"] = {
-	},
-	["MN"] = {
-	},
-	["OP"] = {
-	},
-	["QR"] = {
-	},
-	["ST"] = {
-	},
-	["UV"] = {
-	},
-	["WX"] = {
-	},
-	["YZ"] = {
-	}
+	["A"] = {},
+	["B"] = {},
+	["C"] = {},
+	["D"] = {},
+	["E"] = {},
+	["F"] = {},
+	["G"] = {},
+	["H"] = {},
+	["I"] = {},
+	["J"] = {},
+	["K"] = {},
+	["L"] = {},
+	["M"] = {},
+	["N"] = {},
+	["O"] = {},
+	["P"] = {},
+	["Q"] = {},
+	["R"] = {},
+	["S"] = {},
+	["T"] = {},
+	["U"] = {},
+	["V"] = {},
+	["W"] = {},
+	["X"] = {},
+	["Y"] = {},
+	["Z"] = {},
 }
 
 local displayString = ""
@@ -199,6 +199,111 @@ local function CreateMenu(self, level)
 					menu.hasArrow = false
 					menu.notCheckable = true
 					
+					if firstChar == "A" and Level1_Key == "A" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+
+					if firstChar == "B" and Level1_Key == "B" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "C" and Level1_Key == "C" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "D" and Level1_Key == "D" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "E" and Level1_Key == "E" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "F" and Level1_Key == "F" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "G" and Level1_Key == "G" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "H" and Level1_Key == "H" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "I" and Level1_Key == "I" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "J" and Level1_Key == "J" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "K" and Level1_Key == "K" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "L" and Level1_Key == "L" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "M" and Level1_Key == "M" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "N" and Level1_Key == "N" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "O" and Level1_Key == "O" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "P" and Level1_Key == "P" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "Q" and Level1_Key == "Q" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "R" and Level1_Key == "R" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "S" and Level1_Key == "S" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "T" and Level1_Key == "T" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "U" and Level1_Key == "U" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "V" and Level1_Key == "V" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "W" and Level1_Key == "W" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "X" and Level1_Key == "X" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "Y" and Level1_Key == "Y" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+					
+					if firstChar == "Z" and Level1_Key == "Z" then
+						UIDropDownMenu_AddButton(menu, level)
+					end
+
+					--[[
 					if firstChar >= "A" and firstChar <= "B" and Level1_Key == "AB" then
 						UIDropDownMenu_AddButton(menu, level)
 					end
@@ -250,6 +355,7 @@ local function CreateMenu(self, level)
 					if firstChar >= "Y" and firstChar <= "Z" and Level1_Key == "YZ" then
 						UIDropDownMenu_AddButton(menu, level)
 					end
+					]]
 				end
 			end
 		end
