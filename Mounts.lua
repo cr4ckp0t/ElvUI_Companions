@@ -56,7 +56,6 @@ local startChar = {
 }
 
 local displayString = ""
-local lastPanel
 
 local db, defaults = {}, {
 	char = {
@@ -302,60 +301,6 @@ local function CreateMenu(self, level)
 					if firstChar == "Z" and Level1_Key == "Z" then
 						UIDropDownMenu_AddButton(menu, level)
 					end
-
-					--[[
-					if firstChar >= "A" and firstChar <= "B" and Level1_Key == "AB" then
-						UIDropDownMenu_AddButton(menu, level)
-					end
-					
-					if firstChar >= "C" and firstChar <= "D" and Level1_Key == "CD" then
-						UIDropDownMenu_AddButton(menu, level)
-					end
-					
-					if firstChar >= "E" and firstChar <= "F" and Level1_Key == "EF" then
-						UIDropDownMenu_AddButton(menu, level)
-					end
-					
-					if firstChar >= "G" and firstChar <= "H" and Level1_Key == "GH" then
-						UIDropDownMenu_AddButton(menu, level)
-					end
-					
-					if firstChar >= "I" and firstChar <= "J" and Level1_Key == "IJ" then
-						UIDropDownMenu_AddButton(menu, level)
-					end
-				
-					if firstChar >= "K" and firstChar <= "L" and Level1_Key == "KL" then
-						UIDropDownMenu_AddButton(menu, level)
-					end
-					
-					if firstChar >= "M" and firstChar <= "N" and Level1_Key == "MN" then
-						UIDropDownMenu_AddButton(menu, level)
-					end
-					
-					if firstChar >= "O" and firstChar <= "P" and Level1_Key == "OP" then
-						UIDropDownMenu_AddButton(menu, level)
-					end
-				
-					if firstChar >= "Q" and firstChar <= "R" and Level1_Key == "QR" then
-						UIDropDownMenu_AddButton(menu, level)
-					end
-					
-					if firstChar >= "S" and firstChar <= "T" and Level1_Key == "ST" then
-						UIDropDownMenu_AddButton(menu, level)
-					end
-					
-					if firstChar >= "U" and firstChar <= "V" and Level1_Key == "UV" then
-						UIDropDownMenu_AddButton(menu, level)
-					end
-					
-					if firstChar >= "W" and firstChar <= "X" and Level1_Key == "WX" then
-						UIDropDownMenu_AddButton(menu, level)
-					end
-					
-					if firstChar >= "Y" and firstChar <= "Z" and Level1_Key == "YZ" then
-						UIDropDownMenu_AddButton(menu, level)
-					end
-					]]
 				end
 			end
 		end
@@ -411,15 +356,12 @@ local function OnEnter(self)
 	DT.tooltip:Show()	
 end
 
-local function ValueColorUpdate(hex, r, g, b)
+local function ValueColorUpdate(self, hex, r, g, b)
 	displayString = join("", hex, "%s|r")
 	hexColor = hex
 	
-	if lastPanel ~= nil then
-		OnEvent(lastPanel, "ELVUI_COLOR_UPDATE")
-	end
+	OnEvent(self)
 end
-E["valueColorUpdateFuncs"][ValueColorUpdate] = true
 
 F:RegisterEvent("PLAYER_ENTERING_WORLD")
 F:SetScript("OnEvent", function(self, event, ...)
@@ -430,4 +372,4 @@ F:SetScript("OnEvent", function(self, event, ...)
 	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 end)
 
-DT:RegisterDatatext("Mounts", nil, {"PLAYER_ENTERING_WORLD", "COMPANION_UPDATE", "PET_JOURNAL_LIST_UPDATE"}, OnEvent, OnUpdate, OnClick, OnEnter, nil, L["Mounts"])
+DT:RegisterDatatext("Mounts", nil, {"PLAYER_ENTERING_WORLD", "COMPANION_UPDATE", "PET_JOURNAL_LIST_UPDATE"}, OnEvent, OnUpdate, OnClick, OnEnter, nil, L["Mounts"], nil, ValueColorUpdate)

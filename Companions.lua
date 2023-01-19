@@ -55,7 +55,6 @@ local startChar = {
 }
 
 local displayString = ""
-local lastPanel
 local hexColor = "|cff00ff96"
 
 local db, defaults = {}, {
@@ -476,15 +475,12 @@ local function OnEnter(self)
 	DT.tooltip:Show()
 end
 
-local function ValueColorUpdate(hex, r, g, b)
+local function ValueColorUpdate(self, hex, r, g, b)
 	displayString = join("", hex, "%s|r")
 	hexColor = hex
 	
-	if lastPanel ~= nil then
-		OnEvent(lastPanel, "ELVUI_COLOR_UPDATE")
-	end
+	OnEvent(self)
 end
-E["valueColorUpdateFuncs"][ValueColorUpdate] = true
 
 F:RegisterEvent("PLAYER_ENTERING_WORLD")
 F:SetScript("OnEvent", function(self, event, ...)
@@ -495,5 +491,4 @@ F:SetScript("OnEvent", function(self, event, ...)
 	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 end)
 
-DT:RegisterDatatext("Companions", nil, {"PLAYER_ENTERING_WORLD", "COMPANION_UPDATE", "PET_JOURNAL_LIST_UPDATE"}, OnEvent, OnUpdate, OnClick, OnEnter, nil, L["Companions"])
---DT:RegisterDatatext(L["Companions"], {"PLAYER_ENTERING_WORLD", "COMPANION_UPDATE", "PET_JOURNAL_LIST_UPDATE"}, OnEvent, OnUpdate, OnClick, OnEnter)
+DT:RegisterDatatext("Companions", nil, {"PLAYER_ENTERING_WORLD", "COMPANION_UPDATE", "PET_JOURNAL_LIST_UPDATE"}, OnEvent, OnUpdate, OnClick, OnEnter, nil, L["Companions"], nil, ValueColorUpdate)
