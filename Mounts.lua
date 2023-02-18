@@ -4,7 +4,7 @@
 local E, _, V, P, G, _ = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 local F = CreateFrame("Frame", "ElvUI_CompanionsMountsDatatext", E.UIParent, "UIDropDownMenuTemplate")
-local L = LibStub("AceLocale-3.0"):GetLocale("ElvUI_Companions", false)
+local L = E.Libs.ACL:GetLocale("ElvUI_Companions", false)
 
 -- local api cache
 local C_MountJournal_GetMountIDs = C_MountJournal.GetMountIDs
@@ -365,7 +365,7 @@ end
 
 F:RegisterEvent("PLAYER_ENTERING_WORLD")
 F:SetScript("OnEvent", function(self, event, ...)
-	self.db = LibStub("AceDB-3.0"):New("MountsDB", defaults)
+	self.db = E.Libs.AceDB:New("MountsDB", defaults)
 	db = self.db.char
 	self.initialize = CreateMenu
 	self.displayMode = "MENU"
