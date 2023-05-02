@@ -1,9 +1,8 @@
-## Interface: 100007
+## Interface: 100100
 ## Author: Crackpot
 ## Title: |cff1784d1ElvUI|r Companions
-## Version: 6.2.2
-## Notes: Companions, mounts, and toys datatext for ElvUI.
-## SavedVariables: MountsDB, CompanionsDB
+## Version: 6.3.1
+## Notes: Companions and mounts datatext for ElvUI.
 ## RequiredDeps: ElvUI
 
 Locales\enUS.lua
@@ -20,4 +19,5 @@ Locales\zhTW.lua
 
 Companions.lua
 Mounts.lua
+Options.lua
 

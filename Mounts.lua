@@ -55,17 +55,8 @@ local startChar = {
 	["Z"] = {},
 }
 
+local hexColor
 local displayString = ""
-
-local db, defaults = {}, {
-	char = {
-		id = nil,
-		text = nil,
-		favOne = nil,
-		favTwo = nil,
-		favThree = nil,
-	},
-}
 
 local function PairsByKeys(startChar, f)
 	local a, i = {}, 0
@@ -118,17 +109,21 @@ local function LoadMounts()
 	end
 end
 
-local function OnEvent(self, ...)
-	lastPanel = self
-	if db.id and db.text then
-		self.text:SetFormattedText(displayString, db.text)
+local function OnEvent(self, event)
+	if event == "PLAYER_ENTERING_WORLD" then
+		self.initialize = CreateMenu
+		self.displayMode = "MENU"
+	end
+
+	if E.db.companionsdt.mounts.id and E.db.companionsdt.mounts.text then
+		self.text:SetFormattedText(displayString, E.db.companionsdt.mounts.text)
 	end
 	
 	local curMount, name = GetCurrentMount()
 	if curMount and name then
 		self.text:SetFormattedText(displayString, name)
-		db.id = curMount
-		db.text = name
+		E.db.companionsdt.mounts.id = curMount
+		E.db.companionsdt.mounts.text = name
 	else
 		self.text:SetText(("|cffffffff%s|r"):format(L["Mounts"]))
 	end
@@ -309,7 +304,6 @@ end
 
 local interval = 1
 local function OnUpdate(self, elapsed)
-	--if not self.lastUpdate then self.lastUpdate = 0 end
 	self.lastUpdate = self.lastUpdate and self.lastUpdate + elapsed or 0
 	if self.lastUpdate >= interval then
 		OnEvent(self)
@@ -328,8 +322,8 @@ local function OnClick(self, button)
 		end
 	elseif button == "LeftButton" then
 		if IsShiftKeyDown() then
-			if db.id ~= nil then
-				C_MountJournal_SummonByID(db.id)
+			if E.db.companionsdt.mounts.id ~= nil then
+				C_MountJournal_SummonByID(E.db.companionsdt.mounts.id)
 			end
 		else
 			ToggleCollectionsJournal()
@@ -353,7 +347,7 @@ local function OnEnter(self)
 	else
 		DT.tooltip:AddLine((L["You have %d mounts."]):format(GetNumCompanions("MOUNT")), 0, 1, 0)
 	end
-	DT.tooltip:Show()	
+	DT.tooltip:Show()
 end
 
 local function ValueColorUpdate(self, hex, r, g, b)
@@ -365,11 +359,10 @@ end
 
 F:RegisterEvent("PLAYER_ENTERING_WORLD")
 F:SetScript("OnEvent", function(self, event, ...)
-	self.db = E.Libs.AceDB:New("MountsDB", defaults)
-	db = self.db.char
 	self.initialize = CreateMenu
 	self.displayMode = "MENU"
 	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 end)
+
 
 DT:RegisterDatatext("Mounts", nil, {"PLAYER_ENTERING_WORLD", "COMPANION_UPDATE", "PET_JOURNAL_LIST_UPDATE"}, OnEvent, OnUpdate, OnClick, OnEnter, nil, L["Mounts"], nil, ValueColorUpdate)

@@ -57,16 +57,6 @@ local startChar = {
 local displayString = ""
 local hexColor = "|cff00ff96"
 
-local db, defaults = {}, {
-	char = {
-		id = nil,
-		text = nil,
-		favOne = nil,
-		favTwo = nil,
-		favThree = nil,
-	},
-}
-
 local function PairsByKeys(startChar, f)
 	local a, i = {}, 0
 	for n in pairs(startChar) do tinsert(a, n) end
@@ -85,8 +75,8 @@ end
 local function OnEvent(self, ...)
 	lastPanel = self
 
-	if db.id and db.text then
-		self.text:SetFormattedText(displayString, db.text)
+	if E.db.companionsdt.pets.id and E.db.companionsdt.pets.text then
+		self.text:SetFormattedText(displayString, E.db.companionsdt.pets.text)
 	end
 	
 	local summonedPetID = C_PetJournal_GetSummonedPetGUID()
@@ -98,8 +88,8 @@ local function OnEvent(self, ...)
 		end
 		if creatureName then
 			self.text:SetFormattedText(displayString, creatureName)
-			db.id = summonedPetID
-			db.text = creatureName
+			E.db.companionsdt.pets.id = summonedPetID
+			E.db.companionsdt.pets.text = creatureName
 		end
 	else
 		self.text:SetText(("|cffffffff%s|r"):format(L["Companions"]))
@@ -112,13 +102,13 @@ local function ModifiedClick(button, id)
 	if IsShiftKeyDown() then
 		C_PetJournal_PickupPet(id);
 	elseif IsAltKeyDown() and not IsControlKeyDown() then
-		db.favOne = id
+		E.db.companionsdt.pets.favOne = id
 		DEFAULT_CHAT_FRAME:AddMessage((L["%sElvUI Companions:|r %s added as favorite one."]):format(hexColor, creatureName), 1, 1, 1)
 	elseif IsControlKeyDown() and not IsAltKeyDown() then
-		db.favTwo = id
+		E.db.companionsdt.pets.favTwo = id
 		DEFAULT_CHAT_FRAME:AddMessage((L["%sElvUI Companions:|r %s added as favorite two."]):format(hexColor, creatureName), 1, 1, 1)
 	elseif IsControlKeyDown() and IsAltKeyDown() then
-		db.favThree = id
+		E.db.companionsdt.pets.favThree = id
 		DEFAULT_CHAT_FRAME:AddMessage((L["%sElvUI Companions:|r %s added as favorite three."]):format(hexColor, creatureName), 1, 1, 1)
 	else
 		C_PetJournal_SummonPetByGUID(id);
@@ -174,8 +164,8 @@ local function CreateMenu(self, level)
 				UIDropDownMenu_AddButton(menu, level)
 			end
 			
-			if db.favOne ~= nil then
-				local speciesID, customName, petlevel, xp, maxXp, displayID, isFavorite, petName, petIcon, petType, creatureID = C_PetJournal_GetPetInfoByPetID(db.favOne)
+			if E.db.companionsdt.pets.favOne ~= nil then
+				local speciesID, customName, petlevel, xp, maxXp, displayID, isFavorite, petName, petIcon, petType, creatureID = C_PetJournal_GetPetInfoByPetID(E.db.companionsdt.pets.favOne)
 				local creatureName = petName
 				if customName then
 					creatureName = customName
@@ -184,19 +174,19 @@ local function CreateMenu(self, level)
 				menu.icon = petIcon
 				menu.colorCode = "|cffffffff"
 				menu.func = ModifiedClick
-				menu.arg1 = db.favOne
+				menu.arg1 = E.db.companionsdt.pets.favOne
 				menu.hasArrow = nil
 				menu.notCheckable = true
 				
 				local summonedPetID = C_PetJournal_GetSummonedPetGUID();
-				if summonedPetID == db.favOne then
+				if summonedPetID == E.db.companionsdt.pets.favOne then
 					menu.colorCode = hexColor
 				end
 				UIDropDownMenu_AddButton(menu, level)
 			end
 			
-			if db.favTwo ~= nil then
-				local speciesID, customName, petlevel, xp, maxXp, displayID, isFavorite, petName, petIcon, petType, creatureID = C_PetJournal_GetPetInfoByPetID(db.favTwo)
+			if E.db.companionsdt.pets.favTwo ~= nil then
+				local speciesID, customName, petlevel, xp, maxXp, displayID, isFavorite, petName, petIcon, petType, creatureID = C_PetJournal_GetPetInfoByPetID(E.db.companionsdt.pets.favTwo)
 				local creatureName = petName
 				if customName then
 					creatureName = customName
@@ -205,19 +195,19 @@ local function CreateMenu(self, level)
 				menu.icon = petIcon
 				menu.colorCode = "|cffffffff"
 				menu.func = ModifiedClick
-				menu.arg1 = db.favTwo
+				menu.arg1 = E.db.companionsdt.pets.favTwo
 				menu.hasArrow = nil
 				menu.notCheckable = true
 				
 				local summonedPetID = C_PetJournal_GetSummonedPetGUID();
-				if summonedPetID == db.favTwo then
+				if summonedPetID == E.db.companionsdt.pets.favTwo then
 					menu.colorCode = hexColor
 				end
 				UIDropDownMenu_AddButton(menu, level)
 			end
 			
-			if db.favThree ~= nil then
-				local speciesID, customName, petlevel, xp, maxXp, displayID, isFavorite, petName, petIcon, petType, creatureID = C_PetJournal_GetPetInfoByPetID(db.favThree)
+			if E.db.companionsdt.pets.favThree ~= nil then
+				local speciesID, customName, petlevel, xp, maxXp, displayID, isFavorite, petName, petIcon, petType, creatureID = C_PetJournal_GetPetInfoByPetID(E.db.companionsdt.pets.favThree)
 				local creatureName = petName
 				if customName then
 					creatureName = customName
@@ -226,12 +216,12 @@ local function CreateMenu(self, level)
 				menu.icon = petIcon
 				menu.colorCode = "|cffffffff"
 				menu.func = ModifiedClick
-				menu.arg1 = db.favThree
+				menu.arg1 = E.db.companionsdt.pets.favThree
 				menu.hasArrow = nil
 				menu.notCheckable = true
 				
 				local summonedPetID = C_PetJournal_GetSummonedPetGUID();
-				if summonedPetID == db.favThree then
+				if summonedPetID == E.db.companionsdt.pets.favThree then
 					menu.colorCode = hexColor
 				end
 				UIDropDownMenu_AddButton(menu, level)
@@ -380,8 +370,8 @@ local function OnClick(self, button)
 
 	if button == "LeftButton" then
 		if not IsShiftKeyDown() then
-			if db.id ~= nil then
-				C_PetJournal_SummonPetByGUID(db.id);
+			if E.db.companionsdt.pets.id ~= nil then
+				C_PetJournal_SummonPetByGUID(E.db.companionsdt.pets.id);
 			end
 		else
 			ToggleCollectionsJournal()
@@ -391,9 +381,9 @@ local function OnClick(self, button)
 		if not IsShiftKeyDown() then
 			ToggleDropDownMenu(1, nil, F, self, 0, 0)
 		else
-			db.favOne = nil
-			db.favTwo = nil
-			db.favThree = nil
+			E.db.companionsdt.pets.favOne = nil
+			E.db.companionsdt.pets.favTwo = nil
+			E.db.companionsdt.pets.favThree = nil
 			DEFAULT_CHAT_FRAME:AddMessage((L["%sElvUI Companions:|r Reset Favorites"]):format(hexColor), 1, 1, 1)
 		end
 	end
@@ -430,8 +420,6 @@ end
 
 F:RegisterEvent("PLAYER_ENTERING_WORLD")
 F:SetScript("OnEvent", function(self, event, ...)
-	self.db = E.Libs.AceDB:New("CompanionsDB", defaults)
-	db = self.db.char
 	self.initialize = CreateMenu
 	self.displayMode = "MENU"
 	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
