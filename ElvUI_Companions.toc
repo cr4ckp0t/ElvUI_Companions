@@ -1,7 +1,7 @@
 ## Interface: 100107
 ## Author: Crackpot
 ## Title: |cff1784d1ElvUI|r Companions
-## Version: 6.3.3
+## Version: 6.3.4
 ## Notes: Companions and mounts datatext for ElvUI.
 ## RequiredDeps: ElvUI
 
@@ -20,6 +20,7 @@ Locales\zhTW.lua
 Companions.lua
 Mounts.lua
 Options.lua
+
 
 
 
