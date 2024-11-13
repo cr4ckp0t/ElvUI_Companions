@@ -46,6 +46,7 @@ local startChar = {
 	["Q"] = {},
 	["R"] = {},
 	["S"] = {},
+	["SW"] = {},
 	["T"] = {},
 	["U"] = {},
 	["V"] = {},
@@ -265,8 +266,13 @@ local function CreateMenu(self, level)
 						UIDropDownMenu_AddButton(menu, level)
 					end
 					
-					if firstChar == "S" and Level1_Key == "S" then
-						UIDropDownMenu_AddButton(menu, level)
+					if firstChar == "S" and (Level1_Key == "S" or Level1_Key == "SW") then
+						local secondChar = mount.name:sub(2, 2):upper()
+						if secondChar ~= "W" and Level1_Key == "S" then
+							UIDropDownMenu_AddButton(menu, level)
+						elseif secondChar == "W" and Level1_Key == "SW" then
+							UIDropDownMenu_AddButton(menu, level)
+						end
 					end
 					
 					if firstChar == "T" and Level1_Key == "T" then

@@ -73,8 +73,6 @@ local function PairsByKeys(startChar, f)
 end
 
 local function OnEvent(self, ...)
-	lastPanel = self
-
 	if E.db.companionsdt.pets.id and E.db.companionsdt.pets.text then
 		self.text:SetFormattedText(displayString, E.db.companionsdt.pets.text)
 	end
