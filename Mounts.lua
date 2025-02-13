@@ -126,7 +126,12 @@ local function OnEvent(self, event)
 		E.db.companionsdt.mounts.id = curMount
 		E.db.companionsdt.mounts.text = name
 	else
-		self.text:SetText(("|cffffffff%s|r"):format(L["Mounts"]))
+		local numMounts = GetNumCompanions("MOUNT")
+		if numMounts == nil or numMounts == 0 then
+			self.text:SetText(("|cffffffff%s|r"):format(L["Mounts"]))
+		else
+			self.text:SetText(("|cffffffff%s:|r %s"):format(L["Mounts"], displayString:format(numMounts)))
+		end
 	end
 end
 

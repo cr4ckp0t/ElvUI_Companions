@@ -2,7 +2,7 @@
 ## Author: Crackpot
 ## Title: ElvUI Companions
 ## IconTexture: Interface\AddOns\ElvUI_Companions\Media\crackpot
-## Version: 6.3.12
+## Version: 6.4.0
 ## Notes: Companions and mounts datatext for ElvUI.
 ## RequiredDeps: ElvUI
 

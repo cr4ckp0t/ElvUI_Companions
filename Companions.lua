@@ -90,7 +90,12 @@ local function OnEvent(self, ...)
 			E.db.companionsdt.pets.text = creatureName
 		end
 	else
-		self.text:SetText(("|cffffffff%s|r"):format(L["Companions"]))
+		local numPets, numOwned = C_PetJournal_GetNumPets(false);
+		if numOwned == nil or numOwned == 0 then
+			self.text:SetText(("|cffffffff%s|r"):format(L["Companions"]))
+		else
+			self.text:SetText(("|cffffffff%s:|r %s"):format(L["Companions"], displayString:format(numOwned)))
+		end
 	end
 end
 
