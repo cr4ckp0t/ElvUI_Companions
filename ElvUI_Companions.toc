@@ -1,8 +1,8 @@
-## Interface: 110007
+## Interface: 110100
 ## Author: Crackpot
 ## Title: ElvUI Companions
 ## IconTexture: Interface\AddOns\ElvUI_Companions\Media\crackpot
-## Version: 6.4.0
+## Version: 6.4.1
 ## Notes: Companions and mounts datatext for ElvUI.
 ## RequiredDeps: ElvUI
 
@@ -21,6 +21,7 @@ Locales\zhTW.lua
 Companions.lua
 Mounts.lua
 Options.lua
+
 
 
 
