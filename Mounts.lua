@@ -45,8 +45,11 @@ local startChar = {
 	["P"] = {},
 	["Q"] = {},
 	["R"] = {},
-	["S"] = {},
-	["SW"] = {},
+	["SA-SE"] = {},
+	["SF-SJ"] = {},
+	["SK-SO"] = {},
+	["SP-ST"] = {},
+	["SU-SZ"] = {},
 	["T"] = {},
 	["U"] = {},
 	["V"] = {},
@@ -58,6 +61,17 @@ local startChar = {
 
 local hexColor
 local displayString = ""
+
+local function InArray(tab, val)
+    for index, value in ipairs(tab) do
+        if value == val then
+            return true
+        end
+    end
+
+    return false
+end
+
 
 local function PairsByKeys(startChar, f)
 	local a, i = {}, 0
@@ -270,12 +284,18 @@ local function CreateMenu(self, level)
 					if firstChar == "R" and Level1_Key == "R" then
 						UIDropDownMenu_AddButton(menu, level)
 					end
-					
-					if firstChar == "S" and (Level1_Key == "S" or Level1_Key == "SW") then
+
+					if firstChar == "S" and (Level1_Key == "SA-SE" or Level1_Key == "SF-SJ" or Level1_Key == "SK-SO" or Level1_Key == "SP-ST" or Level1_Key == "SU-SZ") then
 						local secondChar = mount.name:sub(2, 2):upper()
-						if secondChar ~= "W" and Level1_Key == "S" then
+						if (secondChar >= "A" and secondChar <= "E") and Level1_Key == "SA-SE" then
 							UIDropDownMenu_AddButton(menu, level)
-						elseif secondChar == "W" and Level1_Key == "SW" then
+						elseif (secondChar >= "F" and secondChar <= "J") and Level1_Key == "SF-SJ" then
+							UIDropDownMenu_AddButton(menu, level)
+						elseif (secondChar >= "K" and secondChar <= "O") and Level1_Key == "SK-SO" then
+							UIDropDownMenu_AddButton(menu, level)
+						elseif (secondChar >= "P" and secondChar <= "T") and Level1_Key == "SP-ST" then
+							UIDropDownMenu_AddButton(menu, level)
+						elseif (secondChar >= "U" and secondChar <= "Z") and Level1_Key == "SU-SZ" then
 							UIDropDownMenu_AddButton(menu, level)
 						end
 					end
